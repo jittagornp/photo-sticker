@@ -223,21 +223,21 @@
 
             function addShopText2Canvas(canvas, text, color) {
                 var ctx = canvas.getContext("2d");
-                ctx.font = "30px Safari Comic Sans MS";
+                ctx.font = "30px Comic Sans MS";
                 ctx.fillStyle = '#' + color;
                 ctx.fillText(text, 20, 40);
             }
 
             function addDescriptionText2Canvas(canvas, text, color) {
                 var ctx = canvas.getContext("2d");
-                ctx.font = "18px Safari Comic Sans MS";
+                ctx.font = "18px Comic Sans MS";
                 ctx.fillStyle = '#' + color;
                 ctx.fillText(text, 20, 70);
             }
 
             function addPriceText2Canvas(canvas, text, color) {
                 var ctx = canvas.getContext("2d");
-                ctx.font = "18px Safari Comic Sans MS";
+                ctx.font = "18px Comic Sans MS";
                 ctx.fillStyle = '#' + color;
                 ctx.fillText(text, 20, 100);
             }
@@ -255,40 +255,48 @@
                 let $loading = $('.ui-loading');
                 let photoFiles = [];
 
+                let timeout = null;
                 function rewritePhoto(files) {
-                    $photos.text('');
-                    if (files.length) {
-                        $loading.show();
+
+                    if (timeout) {
+                        clearTimeout(timeout);
                     }
-                    
-                    for (let i = 0; i < files.length; i++) {
-                        file2Base64(files[i], function (base64Url) {
-                            createCanvasFromImage(base64Url, function (canvas) {
 
-                                addShopText2Canvas(canvas, $shopName.val(), $fontColor.val());
-                                addDescriptionText2Canvas(canvas, $description.val(), $fontColor.val());
+                    timeout = setTimeout(function () {
+                        $photos.text('');
+                        if (files.length) {
+                            $loading.show();
+                        }
 
-                                if ($showPrice.is(':checked')) {
-                                    addPriceText2Canvas(canvas, $price.val());
-                                }
+                        for (let i = 0; i < files.length; i++) {
+                            file2Base64(files[i], function (base64Url) {
+                                createCanvasFromImage(base64Url, function (canvas) {
 
-                                let $photo = $('<div/>')
-                                    .addClass('ui-photo')
-                                    .addClass('col-sm-3');
+                                    addShopText2Canvas(canvas, $shopName.val(), $fontColor.val());
+                                    addDescriptionText2Canvas(canvas, $description.val(), $fontColor.val());
 
-                                let $image = $('<img>').attr('src', canvas.toDataURL("image/png"));
+                                    if ($showPrice.is(':checked')) {
+                                        addPriceText2Canvas(canvas, $price.val());
+                                    }
 
-                                $photo.append($image);
+                                    let $photo = $('<div/>')
+                                        .addClass('ui-photo')
+                                        .addClass('col-sm-3');
 
-                                $photos.append($photo);
+                                    let $image = $('<img>').attr('src', canvas.toDataURL("image/png"));
 
-                                $loading.hide();
+                                    $photo.append($image);
 
+                                    $photos.append($photo);
+
+                                    $loading.hide();
+
+                                });
+                            }, function (err) {
+                                console.err(err);
                             });
-                        }, function (err) {
-                            console.err(err);
-                        });
-                    }
+                        }
+                    }, 300);
                 }
 
                 $uploadPhoto.change(function () {
@@ -302,7 +310,19 @@
                     }
                 });
 
+                $shopName.on('keyup', function () {
+                    rewritePhoto(photoFiles);
+                });
+
+                $description.on('keyup', function () {
+                    rewritePhoto(photoFiles);
+                });
+
                 $showPrice.on('change', function () {
+                    rewritePhoto(photoFiles);
+                });
+
+                $price.on('keyup', function () {
                     rewritePhoto(photoFiles);
                 });
 
