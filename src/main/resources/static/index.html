@@ -2,350 +2,353 @@
 <html lang="en">
 
 <head>
-  <title>Photo Sticker</title>
-  <meta property="og:title" content="Photo Sticker" />
-  <meta name="description" content="ทำลายสติ๊กเกอร์บนตัวสินค้าให้แฟนใช้ขายของ ^^" />
-  <meta property="og:description" content="ทำลายสติ๊กเกอร์บนตัวสินค้าให้แฟนใช้ขายของ ^^" />
+    <title>Photo Sticker</title>
+    <meta property="og:title" content="Photo Sticker" />
+    <meta name="description" content="ทำลายสติ๊กเกอร์บนตัวสินค้าให้แฟนใช้ขายของ ^^" />
+    <meta property="og:description" content="ทำลายสติ๊กเกอร์บนตัวสินค้าให้แฟนใช้ขายของ ^^" />
 
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
 </head>
 
 <body style="padding: 1rem">
 
-  <style>
-    .ui-photo {
-      margin-top: 1rem;
-    }
-
-    .ui-photo img {
-      max-width: 100%;
-      min-width: 250px;
-    }
-
-    #reloadButton {
-      margin-top: 1rem;
-      display: none;
-    }
-
-    h1 {
-      border-bottom: 1px solid #e1e1e1;
-      padding: 1rem 0;
-      color: #007bff;
-    }
-
-    #photos {
-      margin-top: 1rem;
-      margin-left: -1rem;
-      margin-right: -1rem;
-    }
-
-    .ui-loading{
-        display: none;
-        position: fixed;
-        background: #000;
-        border-radius: 5px;
-        color : #fff;
-        width: 200px;
-        height: 40px;
-        left: 50%;
-        margin-left: -100px;
-        top : 50%;
-        margin-top: -20px;
-        line-height: 40px;
-        text-align: center;
-    }
-  </style>
-
-  <h1>
-    Photo Sticker
-  </h1>
-
-  <p>
-    <strong>วิธีใช้ </strong>
-    <br/> กดเลือกไฟล์ (Browse File) ได้ทีละหลายๆ ไฟล์ จากนั้นรอสักครู่ โปรแกรมจะใส่ชื่อร้าน และคำอธิบายให้ ตามที่พิมพ์ไว้
-  </p>
-  <p>
-    <strong>การดาวน์โหลด (ตอนนี้ได้ทีละรูป)</strong>
-    <ul>
-      <li>
-        สำหรับ Computer ให้คลิกขวาที่รูป จากนั้นกด บันทึกรูปภาพเป็น (Save Image as)
-      </li>
-      <li>
-        สำหรับ iPhone ให้คลิกที่รูปค้างไว้ จากนั้นกด บันทึกภาพ
-      </li>
-      <li>
-        สำหรับ Android ให้คลิกที่รูปค้างไว้ จากนั้นกด ดาวน์โหลดรูปภาพ
-      </li>
-    </ul>
-  </p>
-
-  <div>
-    <label for="shop_name">ชื่อร้าน :</label>
-    <input id="shop_name" type="text" value="Riya Shop" class="form-control" />
-  </div>
-
-  <div>
-    <label for="description">คำอธิบาย : </label>
-    <input id="description" type="text" value="Size S,M" class="form-control" />
-  </div>
-
-  <div>
-    <label for="price">ราคา : </label>
-    <label style="color : red">
-      (
-      <input id="show_price" type="checkbox" checked="" /> แสดง )
-    </label>
-    <input id="price" type="text" value="ราคา 100 บาท" class="form-control" />
-  </div>
-
-  <div>
-    <label for="font_color">สีตัวอัษร :</label>
-    <input id="font_color" type="text" value="ff638e" class="form-control jscolor" style="width: 100px;" />
-  </div>
-
-  <div style="margin-top: 1rem;">
-    <input id="upload_photo" type="file" multiple accept="image/*" />
-
-    <button id="reloadButton" class="btn btn-primary">เริ่มใหม่</button>
-  </div>
-
-  <div id="photos" class="row"></div>
-
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
-  <script src="jscolor.js"></script>
-
-  <script>
-    (function ($, EXIF) {
-
-      // Function to check orientation of image from EXIF metadatas and draw canvas
-      function orientation(src, callback) {
-        let img = new Image();
-        img.src = src;
-        img.onload = function () {
-          // Set variables
-          let canvas = document.createElement('canvas');
-          let ctx = canvas.getContext("2d");
-          let exifOrientation = '';
-          let width = img.width;
-          let height = img.height;
-
-          // Check orientation in EXIF metadatas
-          EXIF.getData(img, function () {
-            let allMetaData = EXIF.getAllTags(this);
-            exifOrientation = allMetaData.Orientation;
-          });
-
-          // set proper canvas dimensions before transform & export
-          if ($.inArray(exifOrientation, [5, 6, 7, 8]) > -1) {
-            canvas.width = height;
-            canvas.height = width;
-          } else {
-            canvas.width = width;
-            canvas.height = height;
-          }
-
-          // transform context before drawing image
-          switch (exifOrientation) {
-            case 2:
-              ctx.transform(-1, 0, 0, 1, width, 0);
-              break;
-            case 3:
-              ctx.transform(-1, 0, 0, -1, width, height);
-              break;
-            case 4:
-              ctx.transform(1, 0, 0, -1, 0, height);
-              break;
-            case 5:
-              ctx.transform(0, 1, 1, 0, 0, 0);
-              break;
-            case 6:
-              ctx.transform(0, 1, -1, 0, height, 0);
-              break;
-            case 7:
-              ctx.transform(0, -1, -1, 0, height, width);
-              break;
-            case 8:
-              ctx.transform(0, -1, 1, 0, 0, width);
-              break;
-            default:
-              ctx.transform(1, 0, 0, 1, 0, 0);
-          }
-
-          // Draw img into canvas
-          ctx.drawImage(img, 0, 0, width, height);
-          callback && callback(canvas.toDataURL("image/png"));
-        };
-      }
-
-      function file2Base64(file, successCallback, errorCallback) {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function () {
-          successCallback && successCallback(reader.result);
-        };
-        reader.onerror = function (error) {
-          errorCallback && errorCallback(error);
-        };
-      }
-
-      function createCanvasFromImage(src, callback) {
-        orientation(src, function (url) {
-          let canvas = document.createElement('canvas');
-          let context = canvas.getContext('2d');
-          let img = new Image();
-          img.src = url;
-          img.onload = function () {
-            let ratio = 450 / img.width;
-            let width = 450;
-            let height = ratio * img.height;
-
-            canvas.width = width;
-            canvas.height = height;
-            context.drawImage(img, 0, 0, width, height);
-            callback && callback(canvas);
-          };
-        });
-      }
-
-      function addShopText2Canvas(canvas, text, color) {
-        var ctx = canvas.getContext("2d");
-        ctx.font = "30px Safari Comic Sans MS";
-        ctx.fillStyle = '#' + color;
-        ctx.fillText(text, 20, 40);
-      }
-
-      function addDescriptionText2Canvas(canvas, text, color) {
-        var ctx = canvas.getContext("2d");
-        ctx.font = "18px Safari Comic Sans MS";
-        ctx.fillStyle = '#' + color;
-        ctx.fillText(text, 20, 70);
-      }
-
-      function addPriceText2Canvas(canvas, text, color) {
-        var ctx = canvas.getContext("2d");
-        ctx.font = "18px Safari Comic Sans MS";
-        ctx.fillStyle = '#' + color;
-        ctx.fillText(text, 20, 100);
-      }
-
-      $(function () {
-
-        let $shopName = $('#shop_name');
-        let $description = $('#description');
-        let $price = $('#price');
-        let $showPrice = $('#show_price');
-        let $uploadPhoto = $('#upload_photo');
-        let $fontColor = $('#font_color');
-        let $photos = $('#photos');
-        let $reloadButton = $('#reloadButton');
-        let $loading = $('.ui-loading');
-        let photoFiles = [];
-
-        function rewritePhoto(files) {
-          $photos.text('');
-          $loading.show();
-          for (let i = 0; i < files.length; i++) {
-            file2Base64(files[i], function (base64Url) {
-              createCanvasFromImage(base64Url, function (canvas) {
-
-                addShopText2Canvas(canvas, $shopName.val(), $fontColor.val());
-                addDescriptionText2Canvas(canvas, $description.val(), $fontColor.val());
-
-                if ($showPrice.is(':checked')) {
-                  addPriceText2Canvas(canvas, $price.val());
-                }
-
-                let $photo = $('<div/>')
-                  .addClass('ui-photo')
-                  .addClass('col-sm-3');
-
-                let $image = $('<img>').attr('src', canvas.toDataURL("image/png"));
-
-                $photo.append($image);
-
-                $photos.append($photo);
-
-                $loading.hide();
-                
-              });
-            }, function (err) {
-              console.err(err);
-            });
-          }
+    <style>
+        .ui-photo {
+            margin-top: 1rem;
         }
 
-        $uploadPhoto.change(function () {
-          let $el = $(this);
-          let files = $el[0].files;
-          if (files && files.length) {
-            photoFiles = files;
-            $uploadPhoto.hide();
-            $reloadButton.show();
-            rewritePhoto(photoFiles);
-          }
-        });
+        .ui-photo img {
+            max-width: 100%;
+            min-width: 250px;
+        }
 
-        $showPrice.on('change', function () {
-          rewritePhoto(photoFiles);
-        });
+        #reloadButton {
+            margin-top: 1rem;
+            display: none;
+        }
 
-        $fontColor.on('change', function () {
-          rewritePhoto(photoFiles);
-        });
+        h1 {
+            border-bottom: 1px solid #e1e1e1;
+            padding: 1rem 0;
+            color: #007bff;
+        }
 
-        $('#reloadButton').on('click', function () {
-          $photos.text('');
-          $uploadPhoto[0].value = '';
-          photoFiles = [];
-          $uploadPhoto.show();
-          $reloadButton.hide();
-        });
-      });
-    })(jQuery, EXIF);
-  </script>
+        #photos {
+            margin-top: 1rem;
+            margin-left: -1rem;
+            margin-right: -1rem;
+        }
 
-  <div class="ui-loading">
-    กำลังดำเนินการ...
-  </div>
+        .ui-loading {
+            display: none;
+            position: fixed;
+            background: #000;
+            border-radius: 5px;
+            color: #fff;
+            width: 200px;
+            height: 40px;
+            left: 50%;
+            margin-left: -100px;
+            top: 50%;
+            margin-top: -20px;
+            line-height: 40px;
+            text-align: center;
+        }
+    </style>
 
-  <br/> คนทำ :
-  <a href="https://www.facebook.com/jittagornp">https://www.facebook.com/jittagornp</a>
+    <h1>
+        Photo Sticker
+    </h1>
 
-  <p style="margin-top: 1rem;">
-    ทำขึ้นมาเพราะให้แฟนใช้ขายของ ^^
-    <br/> รอบก่อนเห็นบ่นว่านั่งทำทีละรูป เหนื่อยมาก (รอบละ 30 50 100 รูป)
-    <br/> ตอนนี้เอาง่ายๆ ไปก่อนน่ะ มีเวลาเดี๋ยวมาทำเพิ่มให้ดีขึ้น
-  </p>
+    <p>
+        <strong>วิธีใช้ </strong>
+        <br/> กดเลือกไฟล์ (Browse File) ได้ทีละหลายๆ ไฟล์ จากนั้นรอสักครู่ โปรแกรมจะใส่ชื่อร้าน และคำอธิบายให้ ตามที่พิมพ์ไว้
+    </p>
+    <p>
+        <strong>การดาวน์โหลด (ตอนนี้ได้ทีละรูป)</strong>
+        <ul>
+            <li>
+                สำหรับ Computer ให้คลิกขวาที่รูป จากนั้นกด บันทึกรูปภาพเป็น (Save Image as)
+            </li>
+            <li>
+                สำหรับ iPhone ให้คลิกที่รูปค้างไว้ จากนั้นกด บันทึกภาพ
+            </li>
+            <li>
+                สำหรับ Android ให้คลิกที่รูปค้างไว้ จากนั้นกด ดาวน์โหลดรูปภาพ
+            </li>
+        </ul>
+    </p>
 
-  <div style="margin-top: 1rem;">
-    <div id="fb-root"></div>
-    <script>(function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id))
-          return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v3.2&appId=588211344556906&autoLogAppEvents=1';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));</script>
+    <div>
+        <label for="shop_name">ชื่อร้าน :</label>
+        <input id="shop_name" type="text" value="Riya Shop" class="form-control" />
+    </div>
 
-    <div class="fb-like" data-href="https://photo-sticker.herokuapp.com" data-layout="standard" data-action="like" data-size="small"
-      data-show-faces="true" data-share="true"></div>
-  </div>
+    <div>
+        <label for="description">คำอธิบาย : </label>
+        <input id="description" type="text" value="Size S,M" class="form-control" />
+    </div>
+
+    <div>
+        <label for="price">ราคา : </label>
+        <label style="color : red">
+            (
+            <input id="show_price" type="checkbox" checked="" /> แสดง )
+        </label>
+        <input id="price" type="text" value="ราคา 100 บาท" class="form-control" />
+    </div>
+
+    <div>
+        <label for="font_color">สีตัวอัษร :</label>
+        <input id="font_color" type="text" value="ff638e" class="form-control jscolor" style="width: 100px;" />
+    </div>
+
+    <div style="margin-top: 1rem;">
+        <input id="upload_photo" type="file" multiple accept="image/*" />
+
+        <button id="reloadButton" class="btn btn-primary">เริ่มใหม่</button>
+    </div>
+
+    <div id="photos" class="row"></div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    <script src="jscolor.js"></script>
+
+    <script>
+        (function ($, EXIF) {
+
+            // Function to check orientation of image from EXIF metadatas and draw canvas
+            function orientation(src, callback) {
+                let img = new Image();
+                img.src = src;
+                img.onload = function () {
+                    // Set variables
+                    let canvas = document.createElement('canvas');
+                    let ctx = canvas.getContext("2d");
+                    let exifOrientation = '';
+                    let width = img.width;
+                    let height = img.height;
+
+                    // Check orientation in EXIF metadatas
+                    EXIF.getData(img, function () {
+                        let allMetaData = EXIF.getAllTags(this);
+                        exifOrientation = allMetaData.Orientation;
+                    });
+
+                    // set proper canvas dimensions before transform & export
+                    if ($.inArray(exifOrientation, [5, 6, 7, 8]) > -1) {
+                        canvas.width = height;
+                        canvas.height = width;
+                    } else {
+                        canvas.width = width;
+                        canvas.height = height;
+                    }
+
+                    // transform context before drawing image
+                    switch (exifOrientation) {
+                        case 2:
+                            ctx.transform(-1, 0, 0, 1, width, 0);
+                            break;
+                        case 3:
+                            ctx.transform(-1, 0, 0, -1, width, height);
+                            break;
+                        case 4:
+                            ctx.transform(1, 0, 0, -1, 0, height);
+                            break;
+                        case 5:
+                            ctx.transform(0, 1, 1, 0, 0, 0);
+                            break;
+                        case 6:
+                            ctx.transform(0, 1, -1, 0, height, 0);
+                            break;
+                        case 7:
+                            ctx.transform(0, -1, -1, 0, height, width);
+                            break;
+                        case 8:
+                            ctx.transform(0, -1, 1, 0, 0, width);
+                            break;
+                        default:
+                            ctx.transform(1, 0, 0, 1, 0, 0);
+                    }
+
+                    // Draw img into canvas
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback && callback(canvas.toDataURL("image/png"));
+                };
+            }
+
+            function file2Base64(file, successCallback, errorCallback) {
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    successCallback && successCallback(reader.result);
+                };
+                reader.onerror = function (error) {
+                    errorCallback && errorCallback(error);
+                };
+            }
+
+            function createCanvasFromImage(src, callback) {
+                orientation(src, function (url) {
+                    let canvas = document.createElement('canvas');
+                    let context = canvas.getContext('2d');
+                    let img = new Image();
+                    img.src = url;
+                    img.onload = function () {
+                        let ratio = 450 / img.width;
+                        let width = 450;
+                        let height = ratio * img.height;
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        context.drawImage(img, 0, 0, width, height);
+                        callback && callback(canvas);
+                    };
+                });
+            }
+
+            function addShopText2Canvas(canvas, text, color) {
+                var ctx = canvas.getContext("2d");
+                ctx.font = "30px Safari Comic Sans MS";
+                ctx.fillStyle = '#' + color;
+                ctx.fillText(text, 20, 40);
+            }
+
+            function addDescriptionText2Canvas(canvas, text, color) {
+                var ctx = canvas.getContext("2d");
+                ctx.font = "18px Safari Comic Sans MS";
+                ctx.fillStyle = '#' + color;
+                ctx.fillText(text, 20, 70);
+            }
+
+            function addPriceText2Canvas(canvas, text, color) {
+                var ctx = canvas.getContext("2d");
+                ctx.font = "18px Safari Comic Sans MS";
+                ctx.fillStyle = '#' + color;
+                ctx.fillText(text, 20, 100);
+            }
+
+            $(function () {
+
+                let $shopName = $('#shop_name');
+                let $description = $('#description');
+                let $price = $('#price');
+                let $showPrice = $('#show_price');
+                let $uploadPhoto = $('#upload_photo');
+                let $fontColor = $('#font_color');
+                let $photos = $('#photos');
+                let $reloadButton = $('#reloadButton');
+                let $loading = $('.ui-loading');
+                let photoFiles = [];
+
+                function rewritePhoto(files) {
+                    $photos.text('');
+                    if (files.length) {
+                        $loading.show();
+                    }
+                    
+                    for (let i = 0; i < files.length; i++) {
+                        file2Base64(files[i], function (base64Url) {
+                            createCanvasFromImage(base64Url, function (canvas) {
+
+                                addShopText2Canvas(canvas, $shopName.val(), $fontColor.val());
+                                addDescriptionText2Canvas(canvas, $description.val(), $fontColor.val());
+
+                                if ($showPrice.is(':checked')) {
+                                    addPriceText2Canvas(canvas, $price.val());
+                                }
+
+                                let $photo = $('<div/>')
+                                    .addClass('ui-photo')
+                                    .addClass('col-sm-3');
+
+                                let $image = $('<img>').attr('src', canvas.toDataURL("image/png"));
+
+                                $photo.append($image);
+
+                                $photos.append($photo);
+
+                                $loading.hide();
+
+                            });
+                        }, function (err) {
+                            console.err(err);
+                        });
+                    }
+                }
+
+                $uploadPhoto.change(function () {
+                    let $el = $(this);
+                    let files = $el[0].files;
+                    if (files && files.length) {
+                        photoFiles = files;
+                        $uploadPhoto.hide();
+                        $reloadButton.show();
+                        rewritePhoto(photoFiles);
+                    }
+                });
+
+                $showPrice.on('change', function () {
+                    rewritePhoto(photoFiles);
+                });
+
+                $fontColor.on('change', function () {
+                    rewritePhoto(photoFiles);
+                });
+
+                $('#reloadButton').on('click', function () {
+                    $photos.text('');
+                    $uploadPhoto[0].value = '';
+                    photoFiles = [];
+                    $uploadPhoto.show();
+                    $reloadButton.hide();
+                });
+            });
+        })(jQuery, EXIF);
+    </script>
+
+    <div class="ui-loading">
+        กำลังดำเนินการ...
+    </div>
+
+    <br/> คนทำ :
+    <a href="https://www.facebook.com/jittagornp">https://www.facebook.com/jittagornp</a>
+
+    <p style="margin-top: 1rem;">
+        ทำขึ้นมาเพราะให้แฟนใช้ขายของ ^^
+        <br/> รอบก่อนเห็นบ่นว่านั่งทำทีละรูป เหนื่อยมาก (รอบละ 30 50 100 รูป)
+        <br/> ตอนนี้เอาง่ายๆ ไปก่อนน่ะ มีเวลาเดี๋ยวมาทำเพิ่มให้ดีขึ้น
+    </p>
+
+    <div style="margin-top: 1rem;">
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = 'https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v3.2&appId=588211344556906&autoLogAppEvents=1';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
+        <div class="fb-like" data-href="https://photo-sticker.herokuapp.com" data-layout="standard" data-action="like" data-size="small"
+            data-show-faces="true" data-share="true"></div>
+    </div>
 </body>
 
 </html>
