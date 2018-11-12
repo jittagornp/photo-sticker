@@ -106,7 +106,7 @@
 
   <div>
     <label for="font_color">สีตัวอัษร :</label>
-    <input id="font_color" type="color" value="#ff638e" class="form-control" style="width: 100px;" />
+    <input id="font_color" type="text" value="ff638e" class="form-control jscolor" style="width: 100px;" />
   </div>
 
   <div style="margin-top: 1rem;">
@@ -126,7 +126,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
-
+  <script src="jscolor.js"></script>
 
   <script>
     (function ($, EXIF) {
@@ -224,32 +224,22 @@
       function addShopText2Canvas(canvas, text, color) {
         var ctx = canvas.getContext("2d");
         ctx.font = "30px Safari Comic Sans MS";
-        ctx.fillStyle = color;
+        ctx.fillStyle = '#' + color;
         ctx.fillText(text, 20, 40);
       }
 
       function addDescriptionText2Canvas(canvas, text, color) {
         var ctx = canvas.getContext("2d");
         ctx.font = "18px Safari Comic Sans MS";
-        ctx.fillStyle = color;
+        ctx.fillStyle = '#' + color;
         ctx.fillText(text, 20, 70);
       }
 
       function addPriceText2Canvas(canvas, text, color) {
         var ctx = canvas.getContext("2d");
         ctx.font = "18px Safari Comic Sans MS";
-        ctx.fillStyle = color;
+        ctx.fillStyle = '#' + color;
         ctx.fillText(text, 20, 100);
-      }
-
-      function addImage2Canvas(canvas, src) {
-        let context = canvas.getContext('2d');
-        let img = new Image();
-        img.src = src;
-        img.onload = function () {
-          context.drawImage(img, 0, 0, 50, 50);
-        };
-        return canvas;
       }
 
       $(function () {
