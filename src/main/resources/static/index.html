@@ -38,7 +38,7 @@
         <br/>
         <strong>การดาวน์โหลด (ตอนนี้ได้ทีละรูป)</strong>
         <br/> - สำหรับ Computer ให้คลิกขวาที่รูป จากนั้นกด บันทึกรูปภาพเป็น (Save Image as)
-        <br/> - สำหรับ iPhone ให้คลิกที่รูปค้างไว้ จากนั้นกด บันทึกภาพ 
+        <br/> - สำหรับ iPhone ให้คลิกที่รูปค้างไว้ จากนั้นกด บันทึกภาพ
         <br/> - สำหรับ Android ให้คลิกที่รูปค้างไว้ จากนั้นกด ดาวน์โหลดรูปภาพ
     </p>
 
@@ -53,7 +53,7 @@
     </div>
 
     <div style="margin-top: 1rem;">
-        <input id="upload_photo" type="file" multiple accept="image/*"/>
+        <input id="upload_photo" type="file" multiple accept="image/*" />
 
         <button style="margin-top: 1rem; display: block" class="btn btn-primary" onclick="window.location.reload(true)">เริ่มใหม่</button>
     </div>
@@ -251,8 +251,22 @@
         })(jQuery);
     </script>
 
-    <br/>
-    คนทำ : <a href="https://www.facebook.com/jittagornp">https://www.facebook.com/jittagornp</a> 
+    <br/> คนทำ :
+    <a href="https://www.facebook.com/jittagornp">https://www.facebook.com/jittagornp</a>
+
+    <div style="margin-top: 1rem;">
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v3.2&appId=588211344556906&autoLogAppEvents=1';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
+        <div class="fb-like" data-href="https://photo-sticker.herokuapp.com" data-layout="standard" data-action="like" data-size="small"
+            data-show-faces="true" data-share="true"></div>
+    </div>
 </body>
 
 </html>
