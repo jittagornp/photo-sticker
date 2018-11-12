@@ -258,46 +258,45 @@
 
                 let timeout = null;
                 function rewritePhoto(files) {
-
-                    if (timeout) {
-                        clearTimeout(timeout);
+                    $photos.text('');
+                    if (files.length) {
+                        $loading.show();
                     }
 
-                    timeout = setTimeout(function () {
-                        $photos.text('');
-                        if (files.length) {
-                            $loading.show();
-                        }
+                    for (let i = 0; i < files.length; i++) {
+                        file2Base64(files[i], function (base64Url) {
+                            createCanvasFromImage(base64Url, function (canvas) {
 
-                        for (let i = 0; i < files.length; i++) {
-                            file2Base64(files[i], function (base64Url) {
-                                createCanvasFromImage(base64Url, function (canvas) {
+                                addShopText2Canvas(canvas, $shopName.val(), $fontColor.val());
+                                addDescriptionText2Canvas(canvas, $description.val(), $fontColor.val());
 
-                                    addShopText2Canvas(canvas, $shopName.val(), $fontColor.val());
-                                    addDescriptionText2Canvas(canvas, $description.val(), $fontColor.val());
+                                if ($showPrice.is(':checked')) {
+                                    addPriceText2Canvas(canvas, $price.val());
+                                }
 
-                                    if ($showPrice.is(':checked')) {
-                                        addPriceText2Canvas(canvas, $price.val());
-                                    }
+                                let $photo = $('<div/>')
+                                    .addClass('ui-photo')
+                                    .addClass('col-sm-3');
 
-                                    let $photo = $('<div/>')
-                                        .addClass('ui-photo')
-                                        .addClass('col-sm-3');
+                                let $image = $('<img>').attr('src', canvas.toDataURL("image/png"));
 
-                                    let $image = $('<img>').attr('src', canvas.toDataURL("image/png"));
+                                $photo.append($image);
 
-                                    $photo.append($image);
+                                $photos.append($photo);
 
-                                    $photos.append($photo);
+                                if (timeout) {
+                                    clearTimeout(timeout);
+                                }
 
+                                timeout = setTimeout(function () {
                                     $loading.hide();
+                                }, 300);
 
-                                });
-                            }, function (err) {
-                                console.err(err);
                             });
-                        }
-                    }, 300);
+                        }, function (err) {
+                            console.err(err);
+                        });
+                    }
                 }
 
                 $uploadPhoto.change(function () {
@@ -384,7 +383,7 @@
     <h3>
         ตัวอย่าง
     </h3>
-    <img src="photo-sticker.png" style="width: 100%;"/>
+    <img src="photo-sticker.png" style="width: 100%;" />
 
 </body>
 
