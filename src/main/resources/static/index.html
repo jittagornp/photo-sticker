@@ -10,24 +10,54 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
 
-    <title>Sticker for Shop</title>
+    <title>Photo Sticker</title>
+    <description>ทำลายสติ๊กเกอร์บนตัวสินค้าให้แฟนใช้ขายของ ^^</description>
 </head>
 
-<body>
+<body style="padding: 1rem">
 
-    Upload Photo :
+    <style>
+        .photo {
+            margin-top: 1rem;
+        }
+    </style>
 
-    <label>
+    <h1>
+        Photo Sticker
+    </h1>
+
+    <p>
+        ทำลายสติ๊กเกอร์บนตัวสินค้าให้แฟนใช้ขายของ ^^
+        <br/>
+        ตอนนี้เอาง่ายๆ ไปก่อนน่ะ มีเวลาเดี๋ยวมาทำเพิ่มให้ดีขึ้น
+    </p>
+    <p>
+        <strong>วิธีใช้ </strong>
+        <br/>
+        กดเลือกไฟล์ (Browse File) ได้ทีละหลายๆ ไฟล์ จากนั้นรอสักครู่ โปรแกรมจะใส่ชื่อร้าน และคำอธิบายให้ ตามที่พิมพ์ไว้ 
+        <br/>
+        <strong>การดาวน์โหลด</strong>
+        <br/>
+        - สำหรับ iPhone ให้คลิกที่รูปค้างไว้ จากนั้นกด บันทึกภาพ
+    </p>
+
+    <div>
+        <label for="shop_name">ชื่อร้าน :</label>
+        <input id="shop_name" type="text" value="Riya Shop" class="form-control" />
+    </div>
+
+    <div>
+        <label for="description">คำอธิบาย : </label>
+        <input id="description" type="text" value="Size S,M" class="form-control" />
+    </div>
+
+    <div style="margin-top: 1rem;">
         <input id="upload_photo" type="file" multiple/>
-    </label>
 
-    Upload Sticker :
+        <button style="margin-top: 1rem; display: block" class="btn btn-primary" onclick="window.location.reload(true)">เริ่มใหม่</button>
+    </div>
 
-    <label>
-        <input id="upload_sticker" type="file" />
-    </label>
-
-    <div id="photos">
+    <div id="photos" class="row" style="margin-top: 1rem;">
 
     </div>
 
@@ -39,10 +69,69 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
 
 
     <script>
         (function ($) {
+
+            // Function to check orientation of image from EXIF metadatas and draw canvas
+            function orientation(img) {
+
+                // Set variables
+                let canvas = document.createElement('canvas');
+                var ctx = canvas.getContext("2d");
+                var exifOrientation = '';
+                var width = img.width,
+                    height = img.height;
+
+                // Check orientation in EXIF metadatas
+                EXIF.getData(img, function () {
+                    var allMetaData = EXIF.getAllTags(this);
+                    exifOrientation = allMetaData.Orientation;
+                    console.log('Exif orientation: ' + exifOrientation);
+                });
+
+                // set proper canvas dimensions before transform & export
+                if (jQuery.inArray(exifOrientation, [5, 6, 7, 8]) > -1) {
+                    canvas.width = height;
+                    canvas.height = width;
+                } else {
+                    canvas.width = width;
+                    canvas.height = height;
+                }
+
+                // transform context before drawing image
+                switch (exifOrientation) {
+                    case 2:
+                        ctx.transform(-1, 0, 0, 1, width, 0);
+                        break;
+                    case 3:
+                        ctx.transform(-1, 0, 0, -1, width, height);
+                        break;
+                    case 4:
+                        ctx.transform(1, 0, 0, -1, 0, height);
+                        break;
+                    case 5:
+                        ctx.transform(0, 1, 1, 0, 0, 0);
+                        break;
+                    case 6:
+                        ctx.transform(0, 1, -1, 0, height, 0);
+                        break;
+                    case 7:
+                        ctx.transform(0, -1, -1, 0, height, width);
+                        break;
+                    case 8:
+                        ctx.transform(0, -1, 1, 0, 0, width);
+                        break;
+                    default:
+                        ctx.transform(1, 0, 0, 1, 0, 0);
+                }
+
+                // Draw img into canvas
+                ctx.drawImage(img, 0, 0, width, height);
+                return canvas.toDataURL("image/png");
+            }
 
             function file2Base64(file, successCallback, errorCallback) {
                 let reader = new FileReader();
@@ -55,25 +144,47 @@
                 };
             }
 
-            function createCanvasFromImage(src) {
-                let canvas = document.createElement('canvas');
-                canvas.style.backgroundColor = 'red';
+            function createCanvasFromImage(src, callback) {
+                let originImg = new Image();
+                originImg.src = src;
+                originImg.onload = function () {
+                    let url = orientation(originImg);
+                    let canvas = document.createElement('canvas');
+                    let context = canvas.getContext('2d');
+                    let img = new Image();
+                    img.src = url;
+                    img.onload = function () {
 
-                let context = canvas.getContext('2d');
-                let img = new Image();
-                img.src = src;
-                img.onload = function () {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    context.drawImage(img, 0, 0, img.width, img.height);
+                        let ratio = 450 / img.width;
+                        let width = 450;
+                        let height = ratio * img.height;
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        context.drawImage(img, 0, 0, width, height);
+                        callback && callback(canvas);
+                    };
                 };
-                return canvas;
             }
 
             function convertBase642ImageTag(base64) {
                 let $img = $('<img/>');
                 $img.attr('src', base64);
                 return $img;
+            }
+
+            function addShopText2Canvas(canvas, text) {
+                var ctx = canvas.getContext("2d");
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillStyle = '#ff638e';
+                ctx.fillText(text, 20, 40);
+            }
+
+            function addDescriptionText2Canvas(canvas, text) {
+                var ctx = canvas.getContext("2d");
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillStyle = '#ff638e';
+                ctx.fillText(text, 20, 70);
             }
 
             function addImage2Canvas(canvas, src) {
@@ -88,6 +199,8 @@
 
             $(function () {
 
+                let $shopName = $('#shop_name');
+                let $description = $('#description');
                 let $photos = $('#photos');
 
                 $('#upload_photo').change(function () {
@@ -96,20 +209,24 @@
                     if (files && files.length) {
                         for (let i = 0; i < files.length; i++) {
                             file2Base64(files[i], function (base64) {
-                                let $canvas = $(createCanvasFromImage(base64));
+                                createCanvasFromImage(base64, function (canvas) {
+                                    let $canvas = $(canvas);
 
-                                let $link = $('<a/>')
-                                .attr('href', 'javascript:void(0)')
-                                //.attr('target', '_blank')
-                                .attr('download', 'download.png')
-                                .addClass('photo');
-                                
-                                $link.append($canvas);
-                                $link.on('click', function () {
-                                    let imageUrl = $link.find('canvas')[0].toDataURL("image/png");
-                                    $link.attr('href', imageUrl);
+                                    addShopText2Canvas(canvas, $shopName.val());
+                                    addDescriptionText2Canvas(canvas, $description.val());
+
+                                    let $link = $('<a/>')
+                                        .attr('href', 'javascript:void(0)')
+                                        .attr('download', 'download.png')
+                                        .attr('target', '_blank')
+                                        .addClass('photo').addClass('col-sm');
+
+                                    let $image = $('<img>').attr('src', canvas.toDataURL("image/png"));
+
+                                    $link.append($image);
+
+                                    $photos.append($link);
                                 });
-                                $photos.append($link);
                             }, function (err) {
                                 console.log(err);
                             });
