@@ -21,6 +21,18 @@
 <body style="padding: 1rem">
 
     <style>
+        .ui-control-panel {
+            background-color: #f3f3f3;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            border: solid 1px #e5e5e5;
+            border-radius: 5px;
+        }
+
+        .ui-control-panel label {
+            margin-top: 0.5rem;
+        }
+
         .ui-photo {
             margin-top: 1rem;
         }
@@ -30,8 +42,7 @@
             min-width: 250px;
         }
 
-        #reloadButton,
-        #updateButton {
+        #updatePanel {
             display: none;
         }
 
@@ -91,37 +102,43 @@
 
     <strong>แก้ไข</strong>
 
-    <div>
-        <label for="shop_name">ชื่อร้าน</label>
-        <input id="shop_name" type="text" value="Riya Shop" class="form-control" />
-    </div>
+    <div class="ui-control-panel">
+        <div>
+            <label for="shop_name">ชื่อร้าน</label>
+            <input id="shop_name" type="text" value="Riya Shop" class="form-control" />
+        </div>
 
-    <div>
-        <label for="description">คำอธิบาย</label>
-        <input id="description" type="text" value="Size S,M" class="form-control" />
-    </div>
+        <div>
+            <label for="description">คำอธิบาย</label>
+            <input id="description" type="text" value="Size S,M" class="form-control" />
+        </div>
 
-    <div>
-        <label for="price">ราคา</label>
-        <label style="color : red">
-            (
-            <input id="show_price" type="checkbox" checked="" /> แสดง )
-        </label>
-        <input id="price" type="text" value="ราคา 100 บาท" class="form-control" />
-    </div>
+        <div>
+            <label for="price">ราคา</label>
+            <label style="color : red">
+                (
+                <input id="show_price" type="checkbox" checked="" /> แสดง )
+            </label>
+            <input id="price" type="text" value="ราคา 100 บาท" class="form-control" />
+        </div>
 
-    <div>
-        <label for="font_color">สีตัวอัษร</label>
-        <input id="font_color" type="text" value="ff638e" class="form-control jscolor" style="width: 100px;" />
-    </div>
+        <div>
+            <label for="font_color">สีตัวอัษร</label>
+            <input id="font_color" type="text" value="ff638e" class="form-control jscolor" style="width: 100px;" />
+        </div>
 
-    <div style="margin-top: 1rem;">
-        <input id="upload_photo" type="file" multiple accept="image/*" />
-    </div>
+        <div style="margin-top: 1rem;">
+            <input id="upload_photo" type="file" multiple accept="image/*" />
+        </div>
 
-    <div style="margin-top: 1rem;">
-        <button id="updateButton" class="btn btn-primary">อัพเดท</button>
-        <button id="reloadButton" style="margin-left: 1rem;" class="btn btn-second">เริ่มใหม่</button>
+        <div id="updatePanel" style="margin-top: 1rem;">
+            <button id="reloadButton" class="btn btn-secondary">เริ่มใหม่</button>
+            <button id="updateButton" style="margin-left: 1rem;" class="btn btn-primary">อัพเดท</button>
+
+            <div style="margin-top: 0.5rem; color : red;">
+                แก้ข้อมูลต่างๆ เสร็จ อย่าลืมกดปุ่ม อัพเดทน่ะ
+            </div>
+        </div>
     </div>
 
     <div id="photos" class="row"></div>
@@ -260,6 +277,7 @@
                 let $uploadPhoto = $('#upload_photo');
                 let $fontColor = $('#font_color');
                 let $photos = $('#photos');
+                let $updatePanel = $('#updatePanel');
                 let $updateButton = $('#updateButton');
                 let $reloadButton = $('#reloadButton');
                 let $loading = $('.ui-loading');
@@ -314,8 +332,7 @@
                     if (files && files.length) {
                         photoFiles = files;
                         $uploadPhoto.hide();
-                        $reloadButton.show();
-                        $updateButton.show();
+                        $updatePanel.show();
                         rewritePhoto(photoFiles);
                     }
                 });
@@ -329,8 +346,7 @@
                     $uploadPhoto[0].value = '';
                     photoFiles = [];
                     $uploadPhoto.show();
-                    $reloadButton.hide();
-                    $updateButton.hide();
+                    $updatePanel.hide();
                 });
             });
         })(jQuery, EXIF);
@@ -377,7 +393,7 @@
         gtag('config', 'UA-129127355-1');
     </script>
 
-    <p style="color : red;">
+    <p style="color : red; margin-top: 1rem;">
         *** ถ้าใช้งานโดยเปิดผ่าน Facebook ไม่ได้ ลอง Copy URL เว็บไซต์ ไปใส่ใน Browser Google Chrome ดูน่ะครับ
     </p>
 
